@@ -7,6 +7,6 @@ import './App.css';
 
 export default () => (
   <Provider store={store}>
-    <PageOne name="Ameixa" />
+    <PageOne name="Players:" />
   </Provider>
 );
