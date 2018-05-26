@@ -15,13 +15,54 @@ export function addPlayer(player) {
 
 
 export function getPlayers() {
+  const CLAN_TAG = process.env.CLAN_TAG;
+  const AUTH_TOKEN = process.env.AUTH_TOKEN;
+  const header = `Authorization: Bearer ${AUTH_TOKEN}`;
+
   return (dispatch) => {
-    axios.get("http://jsonplaceholder.typicode.com/users")
-      .then(response => {
-        response.data.forEach(player => {
-          dispatch(addPlayer(player))
-        });
-      })
+    axios.get(
+      `https://developer.clashofclans.com/clans/${CLAN_TAG}/members`,
+      { headers: header }
+    )
+    .then(response => {
+      response.data.items.forEach(player => {
+        dispatch(addPlayer(player))
+      });
+    })
+    .catch(error => {
+      alert('Não foi possível conectar ao servidor');
+      console.log(error);
+    })
+
+    /*
+    const player = {
+      "items": [
+        {
+          "tag": "string",
+          "name": "string",
+          "expLevel": 0,
+          "league": {
+            "id": 0,
+            "name": "string",
+            "iconUrls": {
+              "small": "string",
+              "large": "string",
+              "medium": "string"
+            }
+          },
+          "trophies": 0,
+          "versusTrophies": 0,
+          "role": "string",
+          "clanRank": 0,
+          "previousClanRank": 0,
+          "donations": 0,
+          "donationsReceived": 0
+        }
+      ]
+    };
+
+    player.items.forEach(p => dispatch(addPlayer(p)));
+    */
   }
 }
 

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 class PageOne extends React.Component {
   componentDidMount() {
-    // this.props.dispatch(getPlayers());
+    this.props.dispatch(getPlayers());
   }
 
   handleSubmit(event) {
@@ -17,6 +17,8 @@ class PageOne extends React.Component {
       const player = { name: playerName, id:55, isActive: 0 };
       this.props.dispatch(addPlayer(player));
     }
+
+    event.target[0].value = '';
   }
 
   isRepeatedName(playerName) {
@@ -49,7 +51,7 @@ class PageOne extends React.Component {
 
               return <li style={{
                 color: player.isActive === 1 ? green : red
-              }} key={player.id}>{player.name + ': ' + player.isActive}</li>;
+              }} key={player.id}>{player.name}</li>;
             })
           }
         </ul>

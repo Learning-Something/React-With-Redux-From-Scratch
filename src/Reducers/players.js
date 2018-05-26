@@ -5,7 +5,8 @@ const initialState = [];
 export function playersReducer(state=initialState, action) {
   switch(action.type) {
     case ADD_PLAYER:
-      return [...state, toUpperPlayerName(action.player)];
+      const player = {...action.player, isActive: 0, id: action.player.tag }
+      return [...state, toUpperPlayerName(player)];
     case UPDATE_PLAYER:
       const newState = Object.assign(state);
       newState.forEach(player => {
@@ -21,6 +22,7 @@ export function playersReducer(state=initialState, action) {
 
 function toUpperPlayerName(player) {
   const playerUp = Object.assign(player);
+  console.log(player)
   playerUp.name = player.name.toUpperCase();
   return playerUp;
 }
